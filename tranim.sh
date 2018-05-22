@@ -8,7 +8,7 @@ debug() { ((DEBUG)) && echo "$0[debug]: $@" >&2; }
 verbose() { ((VERBOSE)) && echo "$0[info]: $@" >&2; }
 err() { echo "$0[error]: $@" >&2; exit 1; }
 usage() { echo "
-Usage:  $0 [-v] [-y label] [-x label] [-r recordings_min] [-T seconds] [-F frames_sec] [-l legend] [-g GNUparams] [-e effects] [-f config_path] [-n rec_name] [datafile]
+Usage:  $0 [-v] [-y label] [-x label] [-r recordings_min] [-T seconds] [-F frames_sec] [-l legend] [-f config_path] [-n rec_name] [datafile]
         $0 -h
 	"; }
 help() { 
@@ -21,8 +21,6 @@ help() {
 	-T recording duration (in seconds)
 	-F number of frames per second (in animation)
 	-l legend of the plot
-	-g GNUplot parameters
-	-e effect parameters
 	-f path to a config file
 	-n name of recording
 
@@ -64,14 +62,6 @@ while getopts y:x:r:T:F:l:g:e:f:n:vh parm; do
 		l)
 			Legend="\"$OPTARG\"";
 			;;
-		g)	
-			# TODO: FIX
-			GnuplotParams=$OPTARG;
-			;;
-		e)
-			# TODO: FIX
-			EffectParams=$OPTARG;
-			;;
 		f)
 			# Config File
 			CONFIG_PATH=$OPTARG;
@@ -99,22 +89,14 @@ TimeConf=$(cat "$CONFIG_PATH" | grep "^Time " | cut -d" " -f2);
 RPMConf=$(cat "$CONFIG_PATH" | grep "^RPM " | cut -d" " -f2);
 FPSConf=$(cat "$CONFIG_PATH" | grep "^FPS " | cut -d" " -f2);
 LegendConf=$(cat "$CONFIG_PATH" | grep "^Legend " | cut -d" " -f2);
-GnuplotParamsConf=$(cat "$CONFIG_PATH" | grep "^GnuplotParams " | cut -d" " -f2);
-EffectParamsConf=$(cat "$CONFIG_PATH" | grep "^EffectParams " | cut -d" " -f2);
-Xmin=$(cat "$CONFIG_PATH" | grep "^Xmin " | cut -d" " -f2);
-Xmax=$(cat "$CONFIG_PATH" | grep "^Xmax " | cut -d" " -f2);
 NameConf=$(cat "$CONFIG_PATH" | grep "^Name " | cut -d" " -f2);
-IgnoreErrorsConf=$(cat "$CONFIG_PATH" | grep "^IgnoreErrors " | cut -d" " -f2);
 [ -n "$Xlabel" ] || Xlabel=$XlabelConf;
 [ -n "$Ylabel" ] || Ylabel=$YlabelConf;
 [ -n "$RPM" ] || RPM=$RPMConf;
 [ -n "$Time" ] || Time=$TimeConf;
 [ -n "$FPS" ] || FPS=$FPSConf;
 [ -n "$Legend" ] || Legend=$LegendConf;
-[ -n "$GnuplotParams" ] || GnuplotParams=$GnuplotParamsConf;
-[ -n "$EffectParams" ] || EffectParams=$EffectParamsConf;
 [ -n "$Name" ] || Name=$NameConf;
-[ -n "$IgnoreErrors" ] || IgnoreErrors=$IgnoreErrorsConf;
 verbose "Default configuration is loaded.";
 # Create folder for the temporary images (if non-existent)
 [ ! -d /tmp/tranim ] && mkdir -p /tmp/tranim && verbose "Creating temporary folder:
