@@ -3,8 +3,10 @@
 Uses tcpdump to capture the traffic.
 Traffic is subsequently analyzed and number of ip packets transfered is displayed against time.
 
-Usage:  $0 [-v] [-y label] [-x label] [-r recordings_min] [-T seconds] [-F frames_sec] [-l legend] [-g GNUparams] [-e effects] [-f config_path] [-n rec_name] [datafile]
-        $0 -h
+Usage:  
+
+	./tranim.sh [-v] [-y label] [-x label] [-r recordings_min] [-T seconds] [-F frames_sec] [-l legend] [-g GNUparams] [-e effects] [-f config_path] [-n rec_name] [datafile]
+	./tranim.sh -h
 ___
         Options:      
 	        -y set the label for the y axis
