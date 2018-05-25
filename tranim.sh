@@ -46,7 +46,7 @@ while getopts y:x:r:T:F:l:g:e:f:n:vh parm; do
 			Xlabel="\"$OPTARG\"";
 			;;
 		r)
-			if [ "$OPTARG" -lt 61 -a "$OPTARG" -gt 0 ]
+			if [ "$OPTARG" -lt 61 ] && [ "$OPTARG" -gt 0 ]
 			then
 				RPM=$OPTARG;
 			else
@@ -81,6 +81,7 @@ while getopts y:x:r:T:F:l:g:e:f:n:vh parm; do
 	esac
 done
 shift $((OPTIND-1));
+
 ###############################################################################
 # Final Configuration & Preparation ###########################################
 XlabelConf=$(cat "$CONFIG_PATH" | grep "^Xlabel " | cut -d" " -f2);
@@ -144,6 +145,7 @@ ReadSecondEnd=0;
 ReadSecondStart=0;
 ReadMinuteStart=0;
 ReadHourStart=0;
+
 ###############################################################################
 # Calculate & Build the plot & Save the frames ################################
 verbose "Creating frames: "
@@ -217,4 +219,5 @@ rm -rf $IMAGE_PATH;
 [ -s data ] && rm data;
 verbose "Temporary files were deleted."
 ###############################################################################
+
 exit 0
